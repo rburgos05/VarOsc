@@ -31,6 +31,7 @@ void setFreq (float freq)
   unsigned int preScalerDivider = preScalerOptions[0];
   
   if (freq < (CLKIO / preScalerOptions[3] / pow(2,16))) {   // Requested frequency is too slow
+    Serial.println("");
     Serial.print("Frequency must be greater than ");
     Serial.print(CLKIO / preScalerOptions[3] / pow(2,16), 4);
     Serial.println(" Hz.");
@@ -51,9 +52,9 @@ void setFreq (float freq)
     TCCR1B = (TCCR1B & PreScalerMask0) | 1 << CS10;   // Set Pre-Scaler divider to 1 (practically no divider)
   }
   else {
-    Serial.println("Frequency can be maximum 36363.0000 Hz.");
-    Serial.println("The timer has been stopped.");
-    Serial.println("Enter a new value to restart the timer.");
+    Serial.printf("\nFrequency can be maximum 36363.0000 Hz.");
+    Serial.printf("\nThe timer has been stopped.");
+    Serial.printf("\nEnter a new value to restart the timer.\n");
     TCCR1B &= PreScalerMask0;   // Set the Clock Select to No Clock (Timer/Counter stopped)
     digitalWrite(ledPin, LOW);
   }
